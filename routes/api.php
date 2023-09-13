@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CustomerController; // Adjust the namespace if necessary
+use App\Http\Controllers\InvoiceController;  // Adjust the namespace if necessary
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'v1'], function() {
+    Route::resource('customers', CustomerController::class);
+    Route::resource('invoices', InvoiceController::class);
 });
