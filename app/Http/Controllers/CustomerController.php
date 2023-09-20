@@ -19,10 +19,12 @@ class CustomerController extends Controller
     {
         // filtering customer data
         $filter = new CustomersFilter();
+
         $queryItems = $filter->transform($request); // [['column', 'operator', 'value']]
-        if(count($queryItems) == 0){
-            return new CustomerCollection(Customer::paginate());
-        }else{
+
+        if (count($queryItems) == 0) {
+            return new CustomerCollection(Customer::with('invoices')->paginate());
+        } else {
             $customers = Customer::where($queryItems)->paginate();
             return new CustomerCollection($customers->append($request->query()));
         }
