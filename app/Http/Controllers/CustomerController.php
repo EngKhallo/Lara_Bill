@@ -51,8 +51,34 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $customer->update($request->all());
+        return response()->json(['message' => 'Customer updated successfully', 'data' => $customer]);
     }
+
+    // public function update(Request $request, $id)
+    // {
+    //     $data = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'type' => 'required|in:I,i,B,b', // Ensure 'type' is one of: Individual, Business (case-insensitive)
+    //         'city' => 'required|string|max:255',
+    //         'address' => 'required|string',
+    //     ]);
+    
+    //     $customer = Customer::find($id);
+    
+    //     if (!$customer) {
+    //         return response()->json(['message' => 'Customer not found'], 404);
+    //     }
+    
+    //     $customer->update([
+    //         'name' => $data['name'],
+    //         'type' => strtoupper($data['type']), // Convert 'type' to uppercase
+    //         'city' => $data['city'],
+    //         'address' => $data['address'],
+    //     ]);
+    
+    //     return response()->json(['message' => 'Customer updated successfully', 'data' => $customer]);
+    // }
 
     /**
      * Remove the specified resource from storage.
