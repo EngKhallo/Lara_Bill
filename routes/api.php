@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController; // Adjust the namespace if necessary
 use App\Http\Controllers\InvoiceController;  // Adjust the namespace if necessary
 use App\Http\Controllers\ProductController;
@@ -15,7 +16,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
 
 // Public routes
 Route::group(['prefix' => 'v1'], function () {
-Route::apiResource('customers', CustomerController::class)->only(['index', 'show']);
-Route::apiResource('invoices', InvoiceController::class)->only(['index', 'show']);
-Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+    Route::apiResource('customers', CustomerController::class)->only(['index', 'show']);
+    Route::apiResource('invoices', InvoiceController::class)->only(['index', 'show']);
+    Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+    Route::post('/register', [AuthController::class, 'register']);
 });
