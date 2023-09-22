@@ -17,12 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Protected routes
+Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('customers', CustomerController::class)->except(['index', 'show']);
+    Route::apiResource('invoices', InvoiceController::class)->except(['index', 'show']);
+    Route::apiResource('products', ProductController::class)->except(['index', 'show']);
 });
 
-Route::group(['prefix' => 'v1'], function() {
-    Route::apiResource('customers', CustomerController::class);
-    Route::apiResource('invoices', InvoiceController::class);
-    Route::apiResource('products', ProductController::class);
+// Public routes
+Route::group(['prefix' => 'v1'], function () {
+Route::apiResource('customers', CustomerController::class)->only(['index', 'show']);
+Route::apiResource('invoices', InvoiceController::class)->only(['index', 'show']);
+Route::apiResource('products', ProductController::class)->only(['index', 'show']);
 });
