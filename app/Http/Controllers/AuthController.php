@@ -51,9 +51,31 @@ class AuthController extends Controller
         ];
     }
 
-    public function loggedInUser(){
+    public function loggedInUser()
+    {
         $user = Auth::user();
 
         return $user;
+    }
+
+    public function login(Request $request)
+    {
+        $fields = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]); // returns an array of validated email and password 
+
+        $credentials = $request->only('email', 'password');
+
+        // Auth::attempt ->checks if user is in the database and log in the user and create new session
+
+        if (Auth::attempt($credentials)) {
+            $user = User::where('email', $fields['email'])->first();
+            $token = $user->createToken('myapptoken')->plainTextToken;
+
+            return response()->json(['user' => $user, 'token' => $token]);
+        }
+
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 }
