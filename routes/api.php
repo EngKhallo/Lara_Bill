@@ -21,4 +21,5 @@ Route::group(['prefix' => 'v1'], function () {
     Route::apiResource('invoices', InvoiceController::class)->only(['index', 'show']);
     Route::apiResource('products', ProductController::class)->only(['index', 'show']);
     Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 });
