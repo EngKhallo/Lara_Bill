@@ -12,6 +12,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::apiResource('customers', CustomerController::class)->except(['index', 'show']);
     Route::apiResource('invoices', InvoiceController::class)->except(['index', 'show']);
     Route::apiResource('products', ProductController::class)->except(['index', 'show']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 // Public routes
