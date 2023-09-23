@@ -50,4 +50,10 @@ class AuthController extends Controller
             'message' => 'Logged out',
         ];
     }
+
+    public function loggedInUser(){
+        $user = Auth::user();
+
+        return $user;
+    }
 }
